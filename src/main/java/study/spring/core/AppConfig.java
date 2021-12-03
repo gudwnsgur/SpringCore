@@ -1,6 +1,8 @@
 package study.spring.core;
 
+import study.spring.core.discount.DiscountPolicy;
 import study.spring.core.discount.FixDiscountPolicy;
+import study.spring.core.member.MemberRepository;
 import study.spring.core.member.MemberService;
 import study.spring.core.member.MemberServiceImpl;
 import study.spring.core.member.MemoryMemberRepository;
@@ -13,13 +15,17 @@ import study.spring.core.order.OrderServiceImpl;
  * 객체의 생성과 연결을 AppConfig가 담당하면서 DIP 해결
  */
 public class AppConfig {
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+    public DiscountPolicy discountPolicy() {
+        return new FixDiscountPolicy();
+    }
+
     public MemberService memberService() {
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
     public OrderService orderService() {
-        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
-
-    
-
 }
