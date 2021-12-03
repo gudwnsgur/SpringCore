@@ -19,7 +19,8 @@ public class OrderServiceImpl implements OrderService {
      *            RateDiscountPolicy로 변경하는 순간 OrderServiceImpl도 변경해야 한다.
      */
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    private DiscountPolicy discountPolicy;
     /**
      * 해결방법
      * 1. DIP : 추상(인터페이스)에만 의존하도록 의존관계를 변경하면 된다.
