@@ -7,7 +7,14 @@ import study.spring.core.member.MemberServiceImpl;
 
 public class MemberApp {
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
+
+        /**
+         * 기존 : MemberServiceImpl 을 직접 생성했다.
+         * 현재 : AppConfig에서 결정된 memberService를 제공
+         */
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 

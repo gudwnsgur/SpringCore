@@ -9,8 +9,6 @@ import study.spring.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-
     /**
      * 문제점
      * 1. DIP 위반 : 추상(인터페이스) 뿐만 아니라 구체(구현) 클래스에도 의존하고 있다.
@@ -20,7 +18,6 @@ public class OrderServiceImpl implements OrderService {
      */
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
 //    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
-    private DiscountPolicy discountPolicy;
     /**
      * 해결방법
      * 1. DIP : 추상(인터페이스)에만 의존하도록 의존관계를 변경하면 된다.
@@ -29,6 +26,13 @@ public class OrderServiceImpl implements OrderService {
      *    이 문제를 해결하려면 누군가 클라이언트(OrderServiceImpl)에
      *    인터페이스(DicountPolicy)의 구현 객체를 대신 생성하고 주입해주어야 한다.
      */
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
